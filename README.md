@@ -3,7 +3,8 @@
 
 ### 개발 환경 
 * IDE: IntelliJ IDEA 
-* OS: Window 10 Java 17 
+* OS: Window 10 
+* *Java 17 
 * Gradle 7.4.1 
 * Spring Boot 2.7.1
 * Maria DB
