@@ -2,10 +2,13 @@ package study.instaclone.service;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import study.instaclone.domain.user.User;
 import study.instaclone.domain.user.UserRepository;
@@ -19,6 +22,8 @@ import static org.mockito.BDDMockito.given;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 @Transactional
 public class UserServiceTest {
 
@@ -29,19 +34,7 @@ public class UserServiceTest {
 
     private User user;
 
-    @BeforeEach
-    public void setUp() {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user = User.builder()
-                .email("test@test")
-                .name("test")
-                .password(encoder.encode("test1234!"))
-                .phone("123123")
-                .title(null)
-                .website(null)
-                .profileImgUrl(null)
-                .build();
-    }
+
 
 
     public UserLoginDto createUserLoginDto() {
@@ -54,13 +47,20 @@ public class UserServiceTest {
     }
 
 
-
     @Test
-    public void save_성공() throws Exception {
+    public void save_회원가입_성공() throws Exception {
         //given
+        user = User.builder()
+                .email("test@test")
+                .name("test")
+                .password("{noop}1234")
+                .phone("123123")
+                .title(null)
+                .website(null)
+                .profileImgUrl(null)
+                .build();
+
         UserLoginDto userLoginDto=createUserLoginDto();
-        given(userRepository.findUserByEmail(any())).willReturn(null);
-        given(userRepository.save(any())).willReturn(user);
         //when
         boolean ret = userService.save(userLoginDto);
 

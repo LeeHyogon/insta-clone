@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Collection;
 
 @Getter
@@ -19,12 +16,16 @@ import java.util.Collection;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+
+    @Column(length = 100, nullable = false, unique = true)
     private String email;
+    @Column(nullable = false)
     private String password;
     private String phone;
+    @Column(length = 30, nullable = false)
     private String name;
     private String title;
     private String website;
