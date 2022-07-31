@@ -53,7 +53,7 @@ public class UserServiceTest {
         user = User.builder()
                 .email("test@test")
                 .name("test")
-                .password("{noop}1234")
+                .password("1234")
                 .phone("123123")
                 .title(null)
                 .website(null)

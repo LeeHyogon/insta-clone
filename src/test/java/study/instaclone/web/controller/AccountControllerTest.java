@@ -37,7 +37,7 @@ public class AccountControllerTest {
     @Transactional
     public void login_성공() throws Exception {
         String username="test@test";
-        String password="{noop}1234";
+        String password="1234";
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         User newUser = User.builder()
                 .email(username)
@@ -55,6 +55,28 @@ public class AccountControllerTest {
         mockMvc.perform(formLogin("/loginForm").user(username).password(password))
                 .andDo(print())
                 .andExpect(redirectedUrl("/user/story"));
+    }
+
+    @Test
+    @Transactional
+    public void login_실패() throws Exception {
+        String username="test@test";
+        String password="1234";
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        User newUser = User.builder()
+                .email(username)
+                .name("test")
+                .password(password)
+                .phone("123123")
+                .title(null)
+                .website(null)
+                .profileImgUrl(null)
+                .build();
+        userRepository.save(newUser);
+
+          mockMvc.perform(formLogin("/loginForm").user(username).password("123214"))
+                .andDo(print())
+                .andExpect(redirectedUrl("/login?error"));
     }
 
 }

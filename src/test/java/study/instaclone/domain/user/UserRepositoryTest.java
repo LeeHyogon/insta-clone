@@ -44,7 +44,5 @@ class UserRepositoryTest {
         assertThat(result.getEmail()).isEqualTo(user.getEmail());
     }
 
-    @Test
-    void findUserById() {
-    }
+
 }

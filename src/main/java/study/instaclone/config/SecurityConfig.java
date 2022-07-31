@@ -39,4 +39,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .invalidateHttpSession(true); // 세션 전체 삭제
     }
 
+
+    //스프링 시큐리티5 문제 해결 코드.
+    @Bean
+    public PasswordEncoder noOpPasswordEncoder(){
+        return NoOpPasswordEncoder.getInstance();
+    }
+
 }
